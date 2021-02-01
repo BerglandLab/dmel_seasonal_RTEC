@@ -1,0 +1,432 @@
+---
+title: "analysis_season_bayenv_Ne_nonpooled_results"
+output: html_document
+---
+<style type="text/css">
+body{ /* Normal  */
+      font-size: 10px;
+  }
+td {  /* Table  */
+  font-size: 8px;
+}
+h1.title {
+  font-size: 24px;
+  color: DarkRed;
+}
+h1 { /* Header 1 */
+  font-size: 16px;
+  color: DarkBlue;
+}
+h2 { /* Header 2 */
+    font-size: 16px;
+  color: DarkBlue;
+}
+h3 { /* Header 3 */
+  font-size: 12px;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkBlue;
+}
+code.r{ /* Code block */
+    font-size: 10px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 10px;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache=TRUE, cache.lazy = FALSE, fig.path="./graphics/plot",autodep=TRUE,fig.width=5, fig.height=4)
+knitr::opts_knit$set(root.dir = '/Users/hm8/stanford/nescent_melCA/seasonal2020/bayenv')
+library(ggplot2)
+library(cowplot)
+library(caTools)
+library(reshape2)
+library(dplyr)
+library(gridGraphics)
+library(RColorBrewer)
+
+```
+
+## Reading in full bayenv results
+```{r, fig.width=2.5, fig.height=2}
+full = na.omit(read.table("results/results_nonpooled_iter100K.seasonal_paired20_snpsfile_Ne_Jan2020.txt", stringsAsFactors = F, sep="\t", fill=T))
+full$dataset = "full"
+colnames(full) = c("chrom","pos","bayes","rho","r", "dataset")
+
+filter = read.table("/Users/hm8/stanford/nescent_melCA/data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors = F)
+filterchrompos = paste(filter[,1], filter[,2], sep="_")
+
+full$chrompos = paste(full$chrom, full$pos, sep="_")
+fullfilter = merge(full[,c("chrompos","bayes","rho","r", "dataset")], data.frame(filterchrompos), by=1)
+```
+
+## Reading in bayenv permutations
+```{r, fig.width=2.5, fig.height=2}
+permlist = list()
+nperm = 100
+for (i in 1:nperm){
+  focal = read.table(paste("/Users/hm8/volumes/hm8_scratch117/nescent_melCA/seasonal2020/bayenv/results_perms_June2020/seasonal_paired20_snpsfile_Ne_June2020.txt.perm",i,".bf.gz", sep=""), stringsAsFactors = F, sep="\t", fill=T)[,1:4]
+  part1 = unlist(lapply(focal[,1],FUN=function(X) unlist(strsplit(X, split="/", fixed=T))[7]))
+  chrompos = unlist(lapply(part1, FUN=function(X) unlist(strsplit(X, split=".", fixed=T))[1]))
+  focalDF = data.frame(chrompos=chrompos, bayes=focal[,2], rho=focal[,3], r=focal[,4], dataset=paste("perm",i, sep=""))
+  permlist[[i]] = merge(na.omit(focalDF), data.frame(fullfilter$chrompos), by=1)
+}
+permlist[[i+1]] = fullfilter[,c("chrompos","bayes","rho","r", "dataset")]
+names(permlist) = c(paste("perm", 1:nperm, sep=""), "full")
+```
+
+
+## Reading in regression results
+```{r}
+reg = read.table("/Users/hm8/stanford/nescent_melCA/glm/mel_all_paired20_2sample_caF_popyear.f_s.glm", header=T, stringsAsFactors = F)
+```
+
+
+## QQ plot with permutations: bayes factor (sept 2020)
+```{r}
+sortedlist = list()
+for (i in 1:length(permlist)){
+  sortedlist[[i]] = sort(permlist[[i]]$bayes, decreasing=T)[1:749109]
+}
+table(unlist(lapply(sortedlist, length)))
+bayes_sortedDF = data.frame(do.call(cbind, sortedlist))
+colnames(bayes_sortedDF) = names(permlist)
+write.table(bayes_sortedDF, file="bayes_sortedDF.full_100perms_polymorphic_sorted.txt", col.names = T, row.names = F, quote=F)
+myquants = data.frame(t(apply(bayes_sortedDF[ ,1:nperm], MARGIN=1, FUN=quantile, c(0.025,0.5,0.975) )))
+myquants2 = data.frame(bayes_sortedDF[ ,nperm+1], myquants)
+colnames(myquants2) = c("full","lower95","median","upper95")
+
+
+# ## too many points to plot, so sample at higher p values
+Nrow = nrow(bayes_sortedDF)
+myinds = c(1:10000, seq(from=10001, to=20000, by=10), seq(from=20001, to=100000, by=100), seq(from=100001, to=Nrow, by=1000))
+permCIpolygon_inds = data.frame(x=c(myquants2$full[myinds], rev(myquants2$full[myinds])), y=c(myquants2$lower95[myinds],rev(myquants2$upper95[myinds]))  )
+
+#glmqq =
+  ggplot(myquants2[myinds,], aes(y=log10(full), x=log10(median)) )+
+  geom_polygon(data=permCIpolygon_inds, aes(y=log10(x), x=log10(y)), fill="grey")+
+  geom_point(size=0.5)+
+  geom_line()+
+  xlab("Permutation (log10 bayes factor)")  +
+  ylab("Observed (log10 bayes factor)") +
+  geom_abline(intercept=0, slope=1, lty=2, col="black") +
+  #geom_vline(xintercept = 3, lty=1, col="red")+
+  theme_light()+
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=10))
+#ggsave("bayenv_log10bayes_permCIpolygon_polymorphic_QQ.pdf", width=4.5,height=3.5)
+#ggsave("bayenv_log10bayes_permCIpolygon_polymorphic_QQ.png", width=4.5,height=3.5)
+
+```
+
+## Enrichment of bayes factor over permutation 
+```{r}
+top01 = bayes_sortedDF[round(nrow(bayes_sortedDF)*0.01),]
+top01full = top01$full #top01$full
+mean(top01$full > top01[1:nperm]) #0.94
+
+top001 = bayes_sortedDF[round(nrow(bayes_sortedDF)*0.001),]
+top001$full #22.789
+mean(top001$full > top001[1:nperm]) #0.96
+
+top0001 = bayes_sortedDF[round(nrow(bayes_sortedDF)*0.0001),]
+top0001$full #198.67
+mean(top0001$full > top0001[1:nperm]) #0.97
+
+bayenv01 = data.frame(top01=unlist(top01[1:100]), dataset = "bayenv")
+bayenv01$grtobs = FALSE
+bayenv01$grtobs[bayenv01$top100 > top01$full] = TRUE
+ggplot(bayenv01, aes(y=top01, x=dataset, color=grtobs) )+
+  geom_jitter(width = 0.2, cex=0.8, alpha=0.5)+
+  scale_color_manual(values=c("black","lightgrey"), guide=F)+
+  geom_segment(aes(x=0.6, y=top01full, xend = 1.4, yend=top01full), color="red")+
+  ylab("Bayes factor (Q=0.01)")+
+  xlab("")+
+  theme_light()+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+#ggsave("perm100_bayesfactor_q01_scatter_obs_line.pdf", width=3,height=4)
+#ggsave("perm100_bayesfactor_q01_scatter_obs_line.png", width=3,height=4)
+```
+
+
+## Reading in regression results
+```{r}
+regNA = read.table("/Users/hm8/stanford/nescent_melCA/glm/mel_all_paired20_2sample_caF_popyear.f_s.glm", header=T, stringsAsFactors = F)
+reg = na.omit(regNA)
+reg$chrompos = paste(reg$chrom, reg$pos, sep="_")
+```
+
+
+
+## Top table: plotting overlap with regression results
+```{r}
+# top 1% vs bottle 1%
+# how many of the top 1% bf are in the top 1% glm?
+quantile(reg_full$reg.p.rank, probs=c(0.01,0.99))
+  #      1%        99% 
+  # 17054.04 1688251.96 
+quant001 = quantile(reg_full$reg.p.rank, probs=c(0.001))
+quant01 = quantile(reg_full$reg.p.rank, probs=c(0.01))
+quant10 = quantile(reg_full$reg.p.rank, probs=c(0.1))
+quant90 = quantile(reg_full$reg.p.rank, probs=c(0.9))
+quant99 = quantile(reg_full$reg.p.rank, probs=c(0.99))
+reg.p01 = c(mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank < quant01),
+mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank < quant10),
+mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank > quant99)
+)
+
+bay.bf01 = c(mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank < quant01),
+mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank < quant10),
+mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank > quant99)
+)
+
+q01_summarytab = t(data.frame(glm.q01=reg.p01, bayenv.q01=bay.bf01))
+colnames(q01_summarytab) = c("q01","q10","q99")
+ggplot(melt(q01_summarytab), aes(y=value, x=Var1, fill=Var2))+
+  geom_bar(stat="identity", position = position_dodge())+
+  xlab("Dataset1 (quantile=0.01)")+
+  ylab("Overlap with dataset2")+
+  scale_fill_manual("Dataset2 quantile", values=c("red","pink","grey") )+
+  theme_light()
+
+####### quantile=0.001
+reg.p001 = c(mean(subset(reg_full, reg.p.rank < quant001)$bay.bf.rank < quant001),
+  mean(subset(reg_full, reg.p.rank < quant001)$bay.bf.rank < quant01),
+mean(subset(reg_full, reg.p.rank < quant001)$bay.bf.rank < quant10),
+mean(subset(reg_full, reg.p.rank < quant001)$bay.bf.rank > quant90)
+)
+bay.bf001 = c(mean(subset(reg_full, bay.bf.rank < quant001)$reg.p.rank < quant001),
+  mean(subset(reg_full, bay.bf.rank < quant001)$reg.p.rank < quant01),
+mean(subset(reg_full, bay.bf.rank < quant001)$reg.p.rank < quant10),
+mean(subset(reg_full, bay.bf.rank < quant001)$reg.p.rank > quant90)
+)
+
+q001_summarytab = t(data.frame(glm.q001_1706=reg.p001, bayenv.q001_1706=bay.bf001))
+colnames(q001_summarytab) = c("q.001","q.01","q.1","q.9")
+ggplot(melt(q001_summarytab), aes(y=value, x=Var1, fill=Var2))+
+  geom_bar(stat="identity", position = position_dodge())+
+  xlab("Dataset1 (quantile=0.001)")+
+  ylab("Overlap with dataset2")+
+  scale_fill_manual("Dataset2 quantile", values=c("darkred","red","pink","grey") )+
+  theme_light()
+#ggsave("glm_bayenv_overlap_topSNPs_barchart.pdf", width=8, height=4)
+
+
+
+####### quantile=0.01
+reg.p01 = c(mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank < quant001),
+  mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank < quant01),
+mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank < quant10),
+mean(subset(reg_full, reg.p.rank < quant01)$bay.bf.rank > quant90)
+)
+bay.bf01 = c(mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank < quant001),
+  mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank < quant01),
+mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank < quant10),
+mean(subset(reg_full, bay.bf.rank < quant01)$reg.p.rank > quant90)
+)
+
+q01_summarytab = t(data.frame(GLM=reg.p01, bayenv=bay.bf01))
+colnames(q01_summarytab) = c("q.001","q.01","q.1","q.9")
+glm_bayenv_barchart_q01 = ggplot(melt(q01_summarytab), aes(y=value, x=Var1, fill=Var2))+
+  geom_bar(stat="identity", position = position_dodge())+
+  xlab("Dataset1 (quantile=0.01)")+
+  ylab("Overlap with dataset2")+
+  scale_fill_manual("Dataset2 quantile", values=c("darkred","red","pink","grey") )+
+  theme_light()
+#ggsave("glm_bayenv_overlap_topSNPs_barchart_q01.pdf", width=6, height=3.5)
+#ggsave("glm_bayenv_overlap_topSNPs_barchart_q01.png", width=6, height=3.5)
+```
+
+
+
+## How do the bayenv results correlate with clinal variation: functions
+```{r}
+compare_glm_glm_quantile_sym = function(data, pops){
+  #try(detach("package:data.table", unload=TRUE)) # this package interferes with the base function "order"
+  ## requires a dataframe in the format
+  #1) chrom
+  #2) pos
+  #3) glm coef
+  #4) glm quant
+  #5:(4+npops) pops glm coefs
+  #(5+npops):4+2*npops) pops glm coefs
+  #quant = c(0,0.9,0.91,0.92,0.93,0.94,0.95,0.96,0.97,0.98,0.99)
+  #quant = c(0,1/2,1/4,1/8,1/16,1/32, 1/64,1/128,1/256,1/512,1/1024,1/2048)
+  quant = 10^(-seq(from=0, to=3, by=0.1))
+  #quant = c(1,0.5,0.25,1/10,0.0001)
+  
+  comparedev2 = matrix(ncol=1+2*length(pops), nrow=length(quant) )
+  comparedev2[,1] = quant
+  npops = length(pops)
+  for (j in 1:npops){   # 3 pops
+    for (i in 1:length(quant)){
+      nsites = nrow(data)
+      focal = data[ intersect(order(as.numeric(data$seas.p))[1:(quant[i]*nsites)], order(as.numeric(data[, 4+npops+j]))[1:(quant[i]*nsites)]), ]          
+      sameup = sum(  na.omit(as.numeric(focal[,j+4]) > 0 & as.numeric(focal$seas.coef) > 0) )
+      samedown = sum( na.omit(as.numeric(focal[,j+4]) < 0 & as.numeric(focal$seas.coef) < 0 ) )
+      zeros = trunc(sum( na.omit( as.numeric(focal[,j+4]) == 0 & !is.na(focal$seas.coef)) ) /2)
+      non.na = sum( na.omit(!is.na(focal[,j+4]) & !is.na(focal$seas.coef) ))
+      comparedev2[i,j+1] = non.na
+      comparedev2[i,npops+j+1] = (zeros+sameup+samedown)/non.na 
+    }
+  }
+  comparedev2SD= comparedev2
+  for (i in 1:nrow(comparedev2SD) ){
+      for (j in 1:length(pops) ){
+          comparedev2SD[i,npops+j+1] = sqrt( comparedev2[i,npops+j+1]*(1-comparedev2[i,npops+j+1])/ comparedev2[i,j+1])
+      }}
+  colnames(comparedev2) = c("quantile",pops,pops)
+  colnames(comparedev2SD) = c("quantile",pops,pops)
+  list(comparedev2, comparedev2SD)
+}
+
+compare_glm_glm_quantile_sym_bin = function(data, pops){
+  #try(detach("package:data.table", unload=TRUE)) # this package interferes with the base function "order"
+  ## requires a dataframe in the format
+  #1) chrom
+  #2) pos
+  #3) glm coef
+  #4) glm quant
+  #5:(4+npops) pops glm coefs
+  #(5+npops):4+2*npops) pops glm coefs
+  quant = 10^(-seq(from=0, to=3, by=0.1))
+  quant_plus1 = quant[-1]
+  
+  comparedev2 = matrix(ncol=1+2*length(pops), nrow=length(quant)-1 )
+  comparedev2[,1] = quant_plus1
+  npops = length(pops)
+  for (j in 1:npops){   # 3 pops
+    for (i in 1:(length(quant)-1)){
+      nsites = nrow(data)
+      focal = data[ intersect( 
+        order(as.numeric(data$seas.p))[(quant_plus1[i]*nsites):(quant[i]*nsites)], 
+        order(as.numeric(data[, 4+npops+j]))[(quant_plus1[i]*nsites):(quant[i]*nsites)]),]   
+      sameup = sum(  na.omit(as.numeric(focal[,j+4]) > 0 & as.numeric(focal$seas.coef) > 0) )
+      samedown = sum( na.omit(as.numeric(focal[,j+4]) < 0 & as.numeric(focal$seas.coef) < 0 ) )
+      zeros = trunc(sum( na.omit( as.numeric(focal[,j+4]) == 0 & !is.na(focal$seas.coef)) ) /2)
+      non.na = sum( na.omit(!is.na(focal[,j+4]) & !is.na(focal$seas.coef) ))
+      comparedev2[i,j+1] = non.na
+      comparedev2[i,npops+j+1] = (zeros+sameup+samedown)/non.na 
+    }
+  }
+  colnames(comparedev2) = c("quantile",pops,pops)
+  list(comparedev2, comparedev2)
+}
+```
+
+## How do the bayenv results correlate with clinal variation
+```{r}
+clinal = read.table("/Users/hm8/stanford/nescent_melCA/glm/mel_clinal_uniquepops_springPA.glm.noheader", stringsAsFactors = F)
+clinal$chrompos = paste(clinal[,1], clinal[,2], sep="_")
+colnames(clinal) = c("chrom","pos","clinal.coef","clinal.p", "clinal.n","chrompos")
+reg_full_clinal = na.omit(merge(reg_full, clinal[,c("chrompos","clinal.coef","clinal.p")], by="chrompos"))
+allcoef = reg_full_clinal[,c("chrom","pos","seas.coef","seas.p","clinal.coef","clinal.p")]
+
+## using the glm coef as the coefficient
+allcoefBF = reg_full_clinal[,c("chrom","pos","seas.coef","bay.bf.rank","clinal.coef","clinal.p")]
+colnames(allcoefBF) = colnames(allcoef)
+
+
+# calculate overlap
+nescentcompareGLM = compare_glm_glm_quantile_sym(allcoef, c("clinal") )
+nescentcompareBF = compare_glm_glm_quantile_sym(allcoefBF, c("clinal") )
+
+quant = 10^(-seq(from=0, to=3, by=0.1))
+inds = 1:20
+df1 = data.frame(quant[inds], nescentcompareGLM[[1]][inds,3], nescentcompareBF[[1]][inds,3])
+colnames(df1) = c("quant","GLM","BF")
+df2 = melt(df1, id=quant)
+colnames(df2) = c("quant","pops","concord")
+df2$pops <- factor(df2$pops, levels = c("GLM","BF"))
+
+
+g_lat_line_red =
+ggplot(data=df2, aes(quant, concord, group=pops) ) +
+  scale_x_continuous(trans="log10", 
+                     breaks=c(10^c(-2, -1, 0), expand.grid(sapply(c(1:9), function(x) x*10^c(-3, -2, -1))) [,1]), 
+                     labels=c(.01, .1, 1, rep("", length(expand.grid(sapply(c(1:9), function(x) x*10^c(-3, -2, -1)))[,1])) ) ) + 
+  geom_hline(yintercept = 0.5, lty=2) +
+  geom_line(aes(quant, concord)) + 
+  geom_point(aes(quant, concord, fill=pops), color="black", shape=21, size=1.5) + 
+  ylab("Concordance") + 
+  xlab("Seasonal/latitudinal quantile (threshold)") +
+  ylim(0.45,1) +
+  theme_light()+
+  theme(
+        panel.grid.minor = element_blank(),
+        legend.direction="vertical", 
+        legend.justification=c("right"), 
+        legend.position=c(0.9,0.8), 
+        legend.key.size = unit(0.35, "cm"),
+        legend.background=element_rect(fill="white", colour="white", linetype="solid", size=.25),
+        legend.text=element_text(size=8),
+        legend.title=element_text(size=0),
+        legend.title.align=.5,  
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 12)),
+        axis.text=element_text(size=8),
+        axis.title=element_text(size=10) )
+#ggsave("clinal_concordance_lineplot_threshold_Sept2020.pdf", width=4.5, height=3.5)
+#ggsave("clinal_concordance_lineplot_threshold_Sept2020.png", width=4.5, height=3.5)
+```
+
+
+
+## How do the bayenv results correlate with clinal variation: by bin
+```{r}
+# calculate overlap
+nescentcompareGLM_bin = compare_glm_glm_quantile_sym_bin(allcoef, c("clinal") )
+nescentcompareBF_bin = compare_glm_glm_quantile_sym_bin(allcoefBF, c("clinal") )
+
+quant = 10^(-seq(from=0, to=3, by=0.1))
+inds = 1:20
+df1 = data.frame(quant[inds], nescentcompareGLM_bin[[1]][inds,3], nescentcompareBF_bin[[1]][inds,3])
+colnames(df1) = c("quant","GLM","bayenv")
+df2 = melt(df1, id=quant)
+colnames(df2) = c("quant","pops","concord")
+df2$pops <- factor(df2$pops, levels = c("GLM","bayenv"))
+
+
+g_lat_line_red =
+ggplot(data=df2, aes(quant, concord, group=pops) ) +
+  scale_x_continuous(trans="log10", 
+                     breaks=c(10^c(-2, -1, 0), expand.grid(sapply(c(1:9), function(x) x*10^c(-3, -2, -1))) [,1]), 
+                     labels=c(.01, .1, 1, rep("", length(expand.grid(sapply(c(1:9), function(x) x*10^c(-3, -2, -1)))[,1])) ) ) + 
+  geom_hline(yintercept = 0.5, lty=2) +
+  geom_line(aes(quant, concord)) + 
+  geom_point(aes(quant, concord, fill=pops), color="black", shape=21, size=1.5) + 
+  ylab("Concordance") + 
+  xlab("Seasonal/latitudinal quantile (bin)") +
+  ylim(0.45,1) +
+  theme_light()+
+  theme(panel.grid.minor = element_blank(),
+        legend.direction="vertical", 
+        legend.justification=c("right"), 
+        legend.position=c(0.9,0.8), 
+        legend.key.size = unit(0.35, "cm"),
+        legend.background=element_rect(fill="white", colour="white", linetype="solid", size=.25),
+        legend.text=element_text(size=8),
+        legend.title=element_text(size=0),
+        legend.title.align=.5)
+#ggsave("clinal_concordance_lineplot_bin_Sept2020.pdf", width=5, height=4)
+#ggsave("clinal_concordance_lineplot_bin_Sept2020.png", width=5, height=4)
+```
+
+
+
+
+## Plotting for supplementary figure
+```{r}
+save(glm_bayenv_barchart_q01, g_lat_line_red, file="glm_bayenv_barchart_q01_clinal_concordance_lineplot_bin.Rdata")
+ 
+multiPlot = plot_grid(glm_bayenv_barchart_q01, NULL, g_lat_line_red, nrow=1, ncol=3, labels = c('A', '', 'B'), vjust=1.1, rel_widths = c(1.2,0.1,1))
+save_plot(multiPlot, file="glm_bayenv_barchart_q01_clinal_concordance_lineplot_bin.pdf", base_aspect_ratio = 2.7, base_height=4)
+save_plot(multiPlot, file="/Users/hm8/Documents/Manuscripts/Seasonal_dmel/Elife submission/resubmissionOct2020/Figures/SupFig4.pdf", base_aspect_ratio = 2.7, base_height=4)
+
+```
+
+

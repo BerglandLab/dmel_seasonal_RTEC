@@ -39,7 +39,7 @@ focalS = which( S=="s" & PY==focalPopYear )
 focalF = which( S=="f" & PY==focalPopYear )
 
 focalA1 = cbind(info[,1:2],freq[,c(focalS,focalF)],dp[,c(focalS,focalF)]) # 852832
-filter = read.table("/scratch/users/hmachado/nescent_melCA/data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
+filter = read.table("../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
 focalA = na.omit(merge(focalA1, filter, by=c(1,2)))
 focalA[,5] = round(focalA[,5] + add_dp)
 focalA[,6] = round(focalA[,6] + add_dp)

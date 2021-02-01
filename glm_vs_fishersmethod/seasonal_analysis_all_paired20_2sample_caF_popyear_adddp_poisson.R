@@ -8,7 +8,7 @@ filein = args[1]  ## mel_freqdp_042016_Ne.Rdata
 fileout1 = args[2] ## "mel_ca.seas_pop_year.f_s.glm"
 add = as.numeric(args[3]) ## "mel_ca.seas_pop_year.f_s.glm"
 
-pops24 = read.table("/scratch/users/hmachado/nescent_melCA/data/paired_spring_fall_populations_noWI13PA9PA12PA14PA15.txt", stringsAsFactors=FALSE)[,1]
+pops24 = read.table("../data/paired_spring_fall_populations_noWI13PA9PA12PA14PA15.txt", stringsAsFactors=FALSE)[,1]
 
 load(filein)
 popID = popinfo[,1]
@@ -22,26 +22,6 @@ ffrpair = popinfo[,8]
 
 ####### Change this to target analysis ########################
 focal = which( PY %in% pops24 & (S=="s" | S=="f") )
-#co_13
-#rd_13
-#rd_12
-#BA_12
-#MA_12
-#NY_12
-#PA_10
-#PA_11
-#WI_12
-#VI_12
-#OUK_13
-#AGA_14
-#CUA_14
-#CWI_14
-#LMA_14
-#SCPA_14
-#TKA_14
-#CUA_15
-#SON_15
-#BHM_14
 ################################################################
 
 freqfocal = freq[, focal]
@@ -55,7 +35,7 @@ R1 = R[focal]
 S1 = S[focal]
 PY1 = PY[focal]
 nsamples = length(S1)
-filter = read.table("/scratch/users/hmachado/nescent_melCA/data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
+filter = read.table("../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
 both=merge(bothA, filter, by=c(1,2))
 
 seas.glm = function(x, fileout){

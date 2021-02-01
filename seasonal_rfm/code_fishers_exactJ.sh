@@ -39,3 +39,7 @@ rm les*.tmp
 mkdir -p results
 Rscript calculate_fishers_method_Jan2017.R fisher_exactJ_pop20/greater_rank_fisher_exactJ.merged.20pop.txt fisher_exactJ_pop20/lesser_rank_fisher_exactJ.merged.20pop.txt L_rank_fisher_exactJ.merged.20pop.txt
 
+
+
+# permutations
+rfm_permutations/anaysis_allseasonal_permutations_June2020.R

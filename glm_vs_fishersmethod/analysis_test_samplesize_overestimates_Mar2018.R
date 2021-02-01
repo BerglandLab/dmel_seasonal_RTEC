@@ -1,6 +1,5 @@
 ## Mar 2018
 
-setwd("/Users/hm8/stanford/nescent_melCA/fishers_method_Oct2016/test_samplesize_overestimates")
 library(dplyr)
 library(ggplot2)
 
