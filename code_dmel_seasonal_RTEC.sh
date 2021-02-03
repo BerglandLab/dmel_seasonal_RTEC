@@ -6,7 +6,7 @@
 
 
 ###### Create files used downstream (uses vcf- available on datadryad)
-code_create_input_files.sh
+create_input_files/code_create_input_files.sh
 
 
 

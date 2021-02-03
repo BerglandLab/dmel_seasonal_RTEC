@@ -25,6 +25,9 @@ Rscript combine_BHM.R mel_freqdp_$chrom\_042016_Ne.Rdata mel_freqdp_$chrom\_0420
 ## Create one file for all chromosomes
 Rscript combine_freqdp.R data/mel_freqdp 042016_fixed.Rdata  ## created mel_freqdp_042016_fixed.Rdata
 
+## Correct the Spain and Austria switch- only affects PCA analysis
+Rscript correct_BA_VI.R  ## mel_freqdp_042016_Ne_fixed_correctBAVI.Rdata
+
 ## Calculate means for spring and fall for each group
 Rscript make_mel_means_dpfreq_pops_allmean.R data/mel_freqdp_042016_Ne_fixed.Rdata data/means_dpfreq.paired20.allmean.Rdata data/paired_spring_fall_populations_noWI13PA9PA12PA14PA15.txt
 

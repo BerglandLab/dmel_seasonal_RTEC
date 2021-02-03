@@ -1,8 +1,6 @@
 ######### Oct 2021
 ### New PCA (using prcomp)
-# This corrects the labels, specifically:
-# mypop[P1=="BA"] = "AT_gr"
-# mypop[P1=="VI"] = "ES_ba"
+# This has the correct the labels, using file: mel_freqdp_042016_Ne_fixed_correctBAVI.Rdata
 ## See manuscript documenting discovery of this switch:
 # Nunez et al 2019: "Updating the metadata of four misidentified samples in the DrosRTEC dataset"
 
@@ -10,7 +8,7 @@ library(ggplot2)
 library(RColorBrewer)
 library(cowplot)
 
-load("../data/mel_freqdp_042016_fixed.Rdata")
+load("../data/mel_freqdp_042016_Ne_fixed_correctBAVI.Rdata")
 
 popID = popinfo[,1]
 P = popinfo[,2]
@@ -44,8 +42,8 @@ for (i in 1:length(PY1)){
 
 mypop = P1
 mypop[P1=="OUK"] = "UA_od"
-mypop[P1=="BA"] = "AT_gr"
-mypop[P1=="VI"] = "ES_ba"
+mypop[P1=="BA"] = "ES_ba"
+mypop[P1=="VI"] = "AT_gr"
 mypop[P1=="rd"] = "CA_es"
 mypop[P1=="co"] = "CA_tu"
 mypop[P1=="SON"] = "ON_su"
