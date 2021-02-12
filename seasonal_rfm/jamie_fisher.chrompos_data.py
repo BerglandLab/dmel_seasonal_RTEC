@@ -1,4 +1,4 @@
-#### calculates fisher exact pvalues using Jamie's script for simulated data
+#### calculates fisher exact pvalues
 ## Oct 31, 2016
 #argv = ["script","/Users/heathermachado/nescent_melCA/simulated_data/datasets/data.tmp", "testout.txt"]
 

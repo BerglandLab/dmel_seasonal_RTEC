@@ -17,9 +17,6 @@ sfpair = popinfo[,7]
 ffrpair = popinfo[,8]
 
 ####### Change this to target analysis ########################
-#focal = which( (S=="s" | S=="f") & P!="FL" & P!="GA" & P!="ME" & P!="SC" & P!="TWA" & P!="UIL" & P!="VA")
-
-### Only north america
 focal = which(popID=="melPA_72011_SPT" | popID=="melSC_072010_SPT" | popID=="melGA_072008_SPT" | popID=="melFL_072010_SPT")
 lat = c(25.5, 30.99, 39.88, 33.39)
 
@@ -38,7 +35,7 @@ R1 = R[focal]
 S1 = S[focal]
 PY1 = PY[focal]
 nsamples = length(S1)
-filter=read.table("/scratch/users/hmachado/nescent_melCA/data/chrom_pos_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
+filter=read.table("../data/chrom_pos_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
 both=merge(bothA, filter, by=c(1,2))
 
 

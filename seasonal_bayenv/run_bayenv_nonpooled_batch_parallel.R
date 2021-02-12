@@ -3,7 +3,8 @@
 
 args = commandArgs(trailingOnly=TRUE)
 
-.libPaths(c("/lustre/scratch116/casm/cgp/users/hm8/R-3.6-modules","/nfs/users/nfs_h/hm8/R/x86_64-pc-linux-gnu-library/3.6","/software/R-3.6.1/lib/R/library") )
+# change depending on library paths
+#.libPaths(c("/lustre/scratch116/casm/cgp/users/hm8/R-3.6-modules","/nfs/users/nfs_h/hm8/R/x86_64-pc-linux-gnu-library/3.6","/software/R-3.6.1/lib/R/library") )
 
 
 library(foreach)
@@ -41,7 +42,7 @@ output = foreach(i=1:nrow(infofile), .combine = 'rbind') %dopar% {
 
   # run bayenv function
   write.table(focaldata, file=paste("input/",randomID,"/",focalinfo[1],".",focalinfo[2],".input", sep="" ), quote=FALSE, col.names = F, row.names = F, sep="\t")
-  system(paste("/lustre/scratch116/casm/cgp/users/hm8/software/bayenv2 -i input/",randomID,"/",focalinfo[1],".",focalinfo[2],".input -e ",environfile," -m matrix_10Kbsub100Kiter_seasonal_paired20.nonpooled.100Kiter.mat -p 40 -n 1 -k 100000 -t -c -r 73480 -o output/",randomID, "/",focalinfo[1],".",focalinfo[2],".output", sep="") )
+  system(paste("bayenv2 -i input/",randomID,"/",focalinfo[1],".",focalinfo[2],".input -e ",environfile," -m matrix_10Kbsub100Kiter_seasonal_paired20.nonpooled.100Kiter.mat -p 40 -n 1 -k 100000 -t -c -r 73480 -o output/",randomID, "/",focalinfo[1],".",focalinfo[2],".output", sep="") )
   # R now waits for the bayenv command to finish
 
   # create vector of results

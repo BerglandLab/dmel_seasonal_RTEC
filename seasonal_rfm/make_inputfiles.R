@@ -20,7 +20,7 @@ focalS = which( S=="s" & PY==focalPopYear )
 focalF = which( S=="f" & PY==focalPopYear )
 
 focalA1 = cbind(info[,1:2],freq[,c(focalS,focalF)],dp[,c(focalS,focalF)]) # 852832
-filter = read.table("../../data/chrom_pos_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
+filter = read.table("../../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
 focalA = merge(focalA1, filter, by=c(1,2))
 
 focalA$dptotal= focalA[,6] + focalA[,5]

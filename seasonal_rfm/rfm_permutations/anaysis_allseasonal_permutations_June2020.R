@@ -1,6 +1,4 @@
 # March 2017
-setwd("/Users/hm8/stanford/nescent_melCA/fishers_method_Oct2016/jamie_fisher_method/permutations")
-
 grt=read.table("../greater_rank_fisher_exactJ.merged.20pop.polymorphic.txt", stringsAsFactors=FALSE, header=TRUE)
 les=read.table("../lesser_rank_fisher_exactJ.merged.20pop.polymorphic.txt", stringsAsFactors=FALSE, header=TRUE)
 

@@ -4,7 +4,7 @@
 ## Converting my data to format for bayenv
 
 # Load in file NOT adjusted for Ne
-load("/Users/hm8/stanford/nescent_melCA/data/mel_freqdp_042016_fixed.Rdata")
+load("../data/mel_freqdp_042016_Ne_fixed_correctBAVI.Rdata")
 
 popID = popinfo[,1]
 P = popinfo[,2]
@@ -23,7 +23,7 @@ lat = c(25.5, 30.99, 39.88, 33.39)
 freqfocal = freq[, focal]
 dpfocal = dp[, focal] ### only looking at fall to frost
 bothA=cbind(info[,1:2], freqfocal, dpfocal)
-filter=read.table("/Users/hm8/stanford/nescent_melCA/data/chrom_pos_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
+filter=read.table("../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
 both=merge(bothA, filter, by=c(1,2))
 
 # calculating alt and ref reads, putting into bayenv format

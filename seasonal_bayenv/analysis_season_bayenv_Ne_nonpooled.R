@@ -3,10 +3,10 @@
 #library("nlme")
 
 # The number of reads, adjusted for number of flies collected
-load("../../data/mel_freqdp_042016_Ne_fixed.Rdata")
+load("../data/mel_freqdp_042016_Ne_fixed_correctBAVI.Rdata")
 
 # Core 20 populations (N=40)
-pops24 = read.table("../../data/paired_spring_fall_populations_noWI13PA9PA12PA14PA15.txt", stringsAsFactors=FALSE)[,1]
+pops24 = read.table("../data/paired_spring_fall_populations_noWI13PA9PA12PA14PA15.txt", stringsAsFactors=FALSE)[,1]
 
 popID = popinfo[,1]
 P = popinfo[,2]
@@ -31,7 +31,8 @@ S1 = S[focal]
 PY1 = PY[focal]
 popID1 = popID[focal]
 nsamples = length(S1)
-filter=read.table("../../data/chrom_pos_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
+# initially include non-polymorphic sites- filter out later
+filter=read.table("../data/chrom_pos_medfreq01_RRgrt0.txt", stringsAsFactors=FALSE)
 both=merge(bothA, filter, by=c(1,2))
 bothAuto = subset(both, X.CHROM != "X")
 bothAuto[is.na(bothAuto)] = 0
@@ -128,6 +129,6 @@ for (j in 1:100){ # for each of 100 permutations
     environ_new[PY1==focalpopyear & S1=="f"] = -1
   }
   permat_switched2[j,] = environ_new
-  write(environ_new, file=paste("permutations_June2020/perm", j,"_seasonal_paired20_environ_June2020_springfall.txt",sep=""), sep="\t", ncolumns = 40)
+  write(environ_new, file=paste("bayenv_permutations/perm", j,"_seasonal_paired20_environ_June2020_springfall.txt",sep=""), sep="\t", ncolumns = 40)
 }
 

@@ -23,7 +23,6 @@ save(switching, file="switching_pop20_permutations.Rdata")
 
 
 # run permutations
-mkdir log
 for i in {1..500}; do
-    bsub -o log/bsub.%J.out -e log/bsub.%J.err -q long -R'select[mem>16000] rusage[mem=16000]' -M 16000 -n1 -J glm Rscript /lustre/scratch116/casm/cgp/users/hm8/nescent_melCA/scripts/permutation_seasonal_analysis_all_paired20_2sample_caF_popyear.R /lustre/scratch116/casm/cgp/users/hm8/nescent_melCA/data/mel_freqdp_042016_Ne_fixed.Rdata permute$i\_mel_all_paired20_2sample_caF_popyear.glm $i
+    Rscript permutation_seasonal_analysis_all_paired20_2sample_caF_popyear.R ../data/mel_freqdp_042016_Ne_fixed_correctBAVI.Rdata permute$i\_mel_all_paired20_2sample_caF_popyear.glm $i
 done

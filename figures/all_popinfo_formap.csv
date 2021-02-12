@@ -1,0 +1,74 @@
+name,locale,pop_name,season,city,state,country,latitude,longitude,col_date,day,month,year,individuals,sex,inbred,bamfilename,project,collector,set
+mel137_062012_RD,RD,rd_12,spring,Esparto,California,USA,38.68,-122.046,6/13/12,13,6,2012,27,male,FALSE,n,california,Machado,Core20
+mel142_082012_RD,RD,rd_12,fall,Esparto,California,USA,38.68,-122.046,8/22/12,22,8,2012,92,male,FALSE,n,california,Machado,Core20
+mel144_082012_GB,GB,gb_12,fall,Placerville,California,USA,38.74,-120.74,8/25/12,25,8,2012,100,male,FALSE,n,california,Machado,extra
+mel153_102012_FB,FB,fb_12,fall,Stockton,California,USA,38.02,-121.2,10/1/12,1,10,2012,100,male,FALSE,n,california,Machado,extra
+mel156_102012_CO,CO,co_12,fall,Tuolumne,California,USA,37.97,-120.26,10/10/12,10,10,2012,116,male,FALSE,n,california,Machado,extra
+mel158_112012_FB,B,fb_12,frost,Stockton,California,USA,38.02,-121.2,11/15/12,15,11,2012,58,male,FALSE,n,california,Machado,extra
+mel159_112012_CO,CO,co_12,frost,Tuolumne,California,USA,37.97,-120.26,11/17/12,17,11,2012,60,male,FALSE,n,california,Machado,extra
+mel160_112012_GB,GB,gb_12,frost,Placerville,California,USA,38.74,-120.74,11/18/12,18,11,2012,56,male,FALSE,n,california,Machado,extra
+mel161_112012_RD,RD,rd_12,frost,Esparto,California,USA,38.68,-122.046,11/20/12,20,11,2012,92,male,FALSE,n,california,Machado,extra
+mel169_052013_RD,RD,rd_13,spring,Esparto,California,USA,38.68,-122.046,5/7/13,7,5,2013,50,male,FALSE,n,california,Machado,Core20
+mel171_052013_CO,CO,co_13,spring,Tuolumne,California,USA,37.97,-120.26,5/14/13,14,5,2013,98,male,FALSE,n,california,Machado,Core20
+mel175_082013_GB,GB,gb_13,fall,Placerville,California,USA,38.74,-120.74,8/30/13,30,8,2013,88,male,FALSE,n,california,Machado,extra
+mel176_082013_CO,CO,co_13,fall,Tuolumne,California,USA,37.97,-120.26,8/31/13,31,8,2013,100,male,FALSE,n,california,Machado,Core20
+mel177_092013_FB,FB,fb_13,fall,Stockton,California,USA,38.02,-121.2,9/3/13,3,9,2013,72,male,FALSE,n,california,Machado,extra
+mel178_092013_RD,RD,rd_13,fall,Esparto,California,USA,38.68,-122.046,9/1/13,1,9,2013,57,male,FALSE,n,california,Machado,Core20
+mel180_122013_CO,CO,co_13,frost,Tuolumne,California,USA,37.97,-120.26,12/8/13,8,12,2013,100,male,FALSE,n,california,Machado,extra
+mel181_122013_GB,GB,gb_13,frost,Placerville,California,USA,38.74,-120.74,12/16/13,16,12,2013,72,male,FALSE,n,california,Machado,extra
+melNC_2003,NC,NC_3,n,Raleigh,North Carolina,USA,35.77,-78.63,NA,NA,NA,2003,92,male,TRUE,n,6Dimensions,Schmidt,extra
+melGA_072008_SPT,GA,GA_8,spring,Hahia,Georgia,USA,30.99,-83.37,7/15/08,NA,7,2008,51,male,FALSE,n,6Dimensions,Schmidt,extra
+melME_102009_FAT,ME,ME_9,fall,Bowdoin,Maine,USA,42.3,-71.06,10/15/09,NA,10,2009,161,male,FALSE,n,6Dimensions,Schmidt,extra
+melFL_072010_SPT,FL,FL_10,spring,Homestead,Florida,USA,25.5,-80.477,7/15/10,NA,7,2010,39,male,FALSE,n,6Dimensions,Schmidt,Cline
+melSC_072010_SPT,SC,SC_10,spring,Eutawville,South Carolina,USA,33.39,-80.34,7/15/10,NA,7,2010,48,male,FALSE,n,6Dimensions,Schmidt,Cline
+melBA_072012_SPT,BA,BA_12,spring,Barcelona,NA,Spain,41.38,2.17,7/13/12,13,7,2012,55,male,FALSE,n,nescent,Gonzalez,Core20
+melBA_102012_FAT,BA,BA_12,fall,Barcelona,NA,Spain,41.38,2.17,10/15/12,NA,10,2012,29,male,FALSE,n,nescent,Gonzalez,Core20
+melMA_072012_SPT,MA,MA_12,spring,Lancaster,Massacusetts,USA,42.45,-71.67,7/28/12,28,7,2012,100,male,FALSE,n,nescent,Schmidt,Core20
+melMA_102012_FAT,MA,MA_12,fall,Lancaster,Massacusetts,USA,42.45,-71.67,10/2/12,2,10,2012,63,male,FALSE,n,nescent,Schmidt,Core20
+melNY_072012_SPT,NY,NY_12,spring,Ithaca,New York,USA,42.44,-76.5,7/25/12,25,7,2012,30,male,FALSE,n,nescent,Howick/Lazzaro,Core20
+melNY_102012_FAT,NY,NY_12,fall,Ithaca,New York,USA,42.44,-76.5,9/23/12,23,9,2012,58,male,FALSE,n,nescent,Howick/Lazzaro,Core20
+melVA_072012_SPT,VA,VA_12,spring,Charlottesville,Virginia,USA,38,-78.47,7/18/12,18,7,2012,95,male,FALSE,n,nescent,Schmidt,extra
+melVI_082012_SPT,VI,VI_12,spring,Gross-Enzersdorf,NA,Vienna,48.2,16.37,8/3/12,3,8,2012,62,male,FALSE,n,nescent,Fabian/Flatt,Core20
+melVI_102012_FAT,VI,VI_12,fall,Gross-Enzersdorf,NA,Vienna,48.2,16.37,10/20/12,20,10,2012,44,male,FALSE,n,nescent,Fabian/Flatt,Core20
+melWI_062012_SPT,WI,WI_12,spring,Cross Plains,Wisconsin,USA,43.11,-89.65,6/10/12,10,6,2012,83,male,FALSE,n,nescent,Pool,Core20
+melWI_102012_FAT,WI,WI_12,fall,Cross Plains,Wisconsin,USA,43.11,-89.65,9/11/12,11,9,2012,164,male,FALSE,n,nescent,Pool,Core20
+melWI_102012_FAT_FRT,WI,WI_12,frost,Cross Plains,Wisconsin,USA,43.11,-89.65,10/20/12,20,10,2012,100,male,FALSE,n,nescent,Pool,extra
+mel13CWI7_SPT,WI,WI_13,spring,Cross Plains,Wisconsin,USA,43.11,-89.65,7/2/13,2,7,2013,130,male,FALSE,n,RTEC,Pool,NewSet
+mel13CWI9_FAT,WI,WI_13,fall,Cross Plains,Wisconsin,USA,43.11,-89.65,9/22/13,22,9,2013,61,male,FALSE,n,RTEC,Pool,NewSet
+mel13OUK10_FAT,OUK,OUK_13,fall,Odessa,NA,Ukraine,46.49,30.71,NA,NA,10,2013,61,male,FALSE,n,RTEC,I. Kozeretska,Core20
+mel13OUK5_SPT,OUK,OUK_13,spring,Odessa,NA,Ukraine,46.49,30.71,NA,NA,5,2013,37,male,FALSE,n,RTEC,I. Kozeretska,Core20
+mel14AGA10_FAT,AGA,AGA_14,fall,Athens,Georgia,USA,33.95,-83.36,NA,NA,10,2014,99,male,FALSE,n,RTEC,K .Dyer,Core20
+mel14AGA6_SPT,AGA,AGA_14,spring,Athens,Georgia,USA,33.95,-83.36,6/15/14,15-20,6,2014,44,male,FALSE,n,RTEC,K .Dyer,Core20
+mel14BHM11_FAT,BHM,BHM_14,fall,Benton Harbor,Michigan,USA,42.1111,-86.4483,11/5/14,5,11,2014,34,male,FALSE,n,RTEC,T. Karasov et al,Core20
+mel14BHM7_SPT,BHM,BHM_14,spring,Benton Harbor,Michigan,USA,42.1111,-86.4483,7/26/14,26,7,2014,106,male,FALSE,n,RTEC,T. Karasov et al,Core20
+mel14CUA10_FAT,VA,CUA_14,fall,Charlotttesville,Virginia,USA,38,-78.47,10/14/14,14,10,2014,76,male,FALSE,n,RTEC,A. Bergland,Core20
+mel14CUA6_SPT,VA,CUA_14,spring,Charlotttesville,Virginia,USA,38,-78.47,6/25/14,25,6,2014,104,male,FALSE,n,RTEC,A. Bergland,Core20
+mel14CWI6_SPT,WI,CWI_14,spring,Cross Plains,Wisconsin,USA,43.11,-89.65,6/25/14,25,6,2014,130,male,FALSE,n,RTEC,J. Pool,Core20
+mel14CWI9_FAT,WI,CWI_14,fall,Cross Plains,Wisconsin,USA,43.11,-89.65,9/18/14,18,9,2014,61,male,FALSE,n,RTEC,J. Pool,Core20
+mel14LMA10_FAT,MA,LMA_14,fall,Lancaster,Massachusetts,USA,42.45,-71.67,10/20/14,20,10,2014,90,male,FALSE,n,RTEC,Schmidt Lab,Core20
+mel14LMA7_SPT,MA,LMA_14,spring,Lancaster,Massachusetts,USA,42.45,-71.67,7/20/14,20,7,2014,32,male,FALSE,n,RTEC,Schmidt Lab,Core20
+mel14SCPA10_FAT,SCPA,SCPA_14,fall,State College,Pennsylvania,USA,40.793395,-77.860001,10/16/14,16,10,2014,67,male,FALSE,n,RTEC,S. Schaeffer,Core20
+mel14SCPA6_SPT,SCPA,SCPA_14,spring,State College,Pennsylvania,USA,40.793395,-77.860001,6/18/14,18-24,6,2014,45,male,FALSE,n,RTEC,S. Schaeffer,Core20
+mel14TKA10_FAT,KA,TKA_14,fall,Topeka,Kansas,USA,39.202831 N,-95.741527,10/22/14,22,10,2014,48,male,FALSE,n,RTEC,P.Roy,Core20
+mel14TKA6_SPT,KA,TKA_14,spring,Topeka,Kansas,USA,39.0913433 N,-95.6246509,6/22/14,22,6,2014,72,male,FALSE,n,RTEC,P.Roy,Core20
+mel14TWA7_SPT,WA,TWA_14,spring,Seattle,Washington,USA,47.6062,-122.3321,,,7,2014,70,male,FALSE,n,RTEC,,extra
+mel15CUA10_FAT,VA,CUA_15,fall,Charlotttesville,Virginia,USA,38,-78.47,10/19/15,19,10,2015,89,male,FALSE,n,RTEC,A. Bergland,Core20
+mel15CUA7_SPT,VA,CUA_15,spring,Charlotttesville,Virginia,USA,38,-78.47,7/1/15,1,7,2015,65,male,FALSE,n,RTEC,A. Bergland,Core20
+mel15SCPA7_SPT,SCPA,SCPA_15,spring,State College,Pennsylvania,USA,40.793395,-77.860001,7/18/15,18-24,7,2015,47,male,FALSE,n,RTEC,S. Schaeffer,extra
+mel15SON8_SPT,ON,SON_15,spring,Sudbury,Ontario,Canada,46.53,-80.96,8/3/15,3,8,2015,108,male,FALSE,n,RTEC,T. Merrit,Core20
+mel15SON9_FAT,ON,SON_15,fall,Sudbury,Ontario,Canada,46.53,-80.96,9/30/15,30,9,2015,110,male,FALSE,n,RTEC,T. Merrit,Core20
+mel15UIL7_SPT,IL,UIL_15,spring,Urbana,Illinois,USA,40.11,-88.21,7/11/15,11,7,2015,184,male,FALSE,n,RTEC,J. Birdsley,extra
+melPA_072009_SPT,PA,PA_9,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,7/15/09,NA,7,2009,55,male,FALSE,n,6Dimensions,Schmidt,NewSet
+melPA_112009_FAT,PA,PA_9,fall,Linvilla,Pennsylvania,USA,39.88,-75.41,11/15/09,NA,11,2009,74,male,FALSE,n,6Dimensions,Schmidt,NewSet
+melPA_112010_FAT,PA,PA_10,fall,Linvilla,Pennsylvania,USA,39.88,-75.41,11/15/10,NA,11,2010,33,male,FALSE,n,6Dimensions,Schmidt,Core20
+melPA_72010_SPT,PA,PA_10,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,7/15/10,NA,7,2010,116,male,FALSE,n,6Dimensions,Schmidt,Core20
+melPA_102011_FAT,PA,PA_11,fall,Linvilla,Pennsylvania,USA,39.88,-75.41,10/15/11,NA,10,2011,47,male,FALSE,n,6Dimensions,Schmidt,Core20
+melPA_112011_WIN_FRT,PA,PA_11,frost,Linvilla,Pennsylvania,USA,39.88,-75.41,11/15/11,NA,11,2011,50,male,FALSE,n,6Dimensions,Schmidt,Core20
+melPA_72011_SPT,PA,PA_11,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,7/15/11,NA,7,2011,75,male,FALSE,n,6Dimensions,Schmidt,NewSet
+melPA_072012_SPT,PA,PA_12,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,7/16/12,16,7,2012,115,male,FALSE,n,nescent,Schmidt,NewSet
+melPA_092012_SUM,PA,PA_12,fall,Linvilla,Pennsylvania,USA,39.88,-75.41,9/13/12,13,9,2012,50,male,FALSE,n,nescent,Schmidt,NewSet
+mel13LN6_SPT,PA,PA_13,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,NA,NA,6,2013,54,male,FALSE,n,RTEC,Schmidt,exrra
+mel14LNPA10_FAT,PA,PA_14,fall,Linvilla,Pennsylvania,USA,39.88,-75.41,10/17/14,17,10,2014,50,male,FALSE,n,RTEC,Schmidt,NewSet
+mel14LNPA6_SPT,PA,PA_14,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,6/27/14,27,6,2014,92,male,FALSE,n,RTEC,Schmidt,NewSet
+mel15LN10_FAT,PA,PA_15,fall,Linvilla,Pennsylvania,USA,39.88,-75.41,NA,NA,10,2015,52,male,FALSE,n,RTEC,Schmidt,NewSet
+mel15LN7_SPT,PA,PA_15,spring,Linvilla,Pennsylvania,USA,39.88,-75.41,NA,NA,7,2015,74,male,FALSE,n,RTEC,Schmidt,NewSet

@@ -1,7 +1,6 @@
 ## Bayenv analysis of clinal variation
 # Feb 2019
 
-setwd("/Users/hm8/stanford/nescent_melCA/clinal/bayenv")
 library(ggplot2)
 library(reshape2)
 
@@ -21,7 +20,7 @@ colnames(clinal_snps)[4] = "chrom"
 colnames(clinal_snps)[5] = "pos"
 
 ### Polymorphic sites only
-my.filter = read.table("../../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt")
+my.filter = read.table("../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt")
 colnames(my.filter) = c("chrom","pos")
 filter = my.filter[my.filter[,1]!="X",]
 clinal_snps2 = merge(clinal_snps, filter, by=c("chrom","pos") )  ## 781110
@@ -34,7 +33,7 @@ clinal_snps2 = merge(clinal_snps, filter, by=c("chrom","pos") )  ## 781110
 #"melSC_072010_SPT": 33.39
 
 # Comparison with old analysis
-oldclinal = read.table("../../glm/mel_clinal_uniquepops_springPA_noMA.glm.noheader",stringsAsFactors = F)
+oldclinal = read.table("../results/mel_clinal_uniquepops_springPA_noMA.glm.noheader",stringsAsFactors = F)
 #oldclinal$chr_pos = paste(oldclinal$V1, oldclinal$V2, sep="_")
 colnames(oldclinal) = c("chrom","pos","lm_beta","lm_pvalue","N")
 clinal_snps3 = merge(oldclinal, clinal_snps2, by=c("chrom","pos") )
@@ -58,9 +57,9 @@ summary(lm(clinal_snps3$lm_beta~clinal_snps3$Z))
 
 
 # Read in seasonal data
-all = read.table("../../glm/mel_all_nonclinal_paired20_2sample_caF_popyear.f_s.glm", stringsAsFactors = F, header=T)
-ca = read.table("../../glm/mel_ca_popyear_paired.f_s.glm", stringsAsFactors = F, header=T)
-eur = read.table("../../glm/mel_eur.seas_pop_year.f_s.glm.noheader", stringsAsFactors = F)
+all = read.table("../results/mel_all_nonclinal_paired20_2sample_caF_popyear.f_s.glm", stringsAsFactors = F, header=T)
+ca = read.table("../results/mel_ca_popyear_paired.f_s.glm", stringsAsFactors = F, header=T)
+eur = read.table("../results/mel_eur.seas_pop_year.f_s.glm.noheader", stringsAsFactors = F)
 colnames(eur) = c("chrom","pos","seas.coef",  "seas.p", "seas1.N", "seas2.N")
 
 clinal_all = na.omit(merge(all[,c("seas.coef","seas.p","chrom","pos")], clinal_snps3[,c("lm_beta","lm_pvalue","Z","chrom","pos")], by= c("chrom","pos") ) )
@@ -167,20 +166,6 @@ clinal_bayenv_thresh = ggplot(subset(melt_concordDF, quantile>=0.01 & dataset=="
   geom_hline(yintercept=0.5, linetype=2) + #, color, size)
   theme_light()
 ggsave("bayenv_vs_lm_clinalconcordance_poly_original_errorbars_Nov2020.pdf", width=6,height=4)
-ggsave("bayenv_vs_lm_clinalconcordance_poly_original_errorbars_Nov2020.png", width=6,height=4)
-# ggplot(melt_concordDF, aes(quantile, value, group=dataset, color=dataset))+
-#   geom_line()+
-#   geom_point()+
-#   facet_wrap(.~model)+
-#   scale_x_log10()+
-#   ylab("Concordance")+
-#   xlab("Joint quantile")+
-#   geom_hline(yintercept=0.5, linetype=2) + #, color, size)
-#   theme_light()
-# ggsave("bayenv_vs_lm_clinalconcordance_poly.pdf", width=6,height=3)
-
-
-
 
 # For non-cumulative
 for (i in 1:(length(inds)-1)){
@@ -258,8 +243,6 @@ clinal_bayenv_bin = ggplot(subset(melt_concordDFnoncum, quantile>=0.01 & dataset
   xlab("Joint quantile bin")+
   geom_hline(yintercept=0.5, linetype=2) + #, color, size)
   theme_light()
-ggsave("bayenv_vs_lm_clinalconcordance_poly_original_noncum_errorbars_Nov2020.pdf", width=6,height=4)
-ggsave("bayenv_vs_lm_clinalconcordance_poly_original_noncum_errorbars_Nov2020.png", width=6,height=4)
 
 library(cowplot)
 save(clinal_bayenv_bin, clinal_bayenv_thresh, file="clinal_bayenv_plot_objects.Rdata")
@@ -267,4 +250,3 @@ clinal_bayenv_thresh2 = clinal_bayenv_thresh + theme(legend.position = "none")
 clinal_bayenv_bin2 = clinal_bayenv_bin + ylab("")
 p1 = plot_grid(clinal_bayenv_thresh2, clinal_bayenv_bin2, rel_widths = c(1,1.3), labels=c("A","B"))
 save_plot(p1, file="bayenv_vs_lm_clinalconcordance_poly_original_cum_noncum_errorbars_Nov2020.pdf", base_width=8,base_height=3.2)
-save_plot(p1, file="bayenv_vs_lm_clinalconcordance_poly_original_cum_noncum_errorbars_Nov2020.png", base_width=8,base_height=3.2)

@@ -1,6 +1,8 @@
 ## April 2016
 ## testing parallelism in seasonal sites
 
+## Dependency:
+# "bootstrap_fmean_dp.mel.medfreq01_RRgrt0.recRate.polymorphic.txt" can be found at: https://doi.org/10.5061/dryad.4r7b826
 
 ############ Extended quantile range
 #############
@@ -93,7 +95,7 @@ compare_glm_glm = function(data, pops, p2=NULL){
 ######### read in full files
 
 # clinal regression
-tempA = read.table("../glm/mel_clinal_uniquepops_springPA_noMA.glm.noheader", stringsAsFactors=FALSE) ## only spring pops
+tempA = read.table("../results/mel_clinal_uniquepops_springPA_noMA.glm.noheader", stringsAsFactors=FALSE) ## only spring pops
 my.filter = read.table("../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt")
 my.filterA = my.filter[my.filter[,1]!="X",]
 tempB = merge(my.filterA, tempA, by=c(1,2))
@@ -109,7 +111,8 @@ allcoef = na.omit(merge(all_fs[,1:4], temp[,1:4], by=c(1,2)) )
 rm(tempA, my.filter, my.filterA, temp, tempB, all_fsA, all_fsB, all_fsC, all_fs)
 
 # combine the control SNPs with the
-controls = read.table("../bootstrap/bootstrap_fmean_dp.mel.medfreq01_RRgrt0.recRate.txt", stringsAsFactors=FALSE)
+## "bootstrap_fmean_dp.mel.medfreq01_RRgrt0.recRate.polymorphic.txt" can be found at: https://doi.org/10.5061/dryad.4r7b826
+controls = read.table("bootstrap_fmean_dp.mel.medfreq01_RRgrt0.recRate.polymorphic.txt", stringsAsFactors=FALSE)
 controls2 = merge(controls, allcoef[,1:2], by=c(1,2))
 ncontrol = ncol(controls2) - 2 # first 2 columns are read chrom and pos
 rm(controlbootlist,controls)

@@ -37,7 +37,6 @@ pre { /* Code block - determines code spacing between lines */
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(cache=TRUE, cache.lazy = FALSE, fig.path="./graphics/plot",autodep=TRUE,fig.width=5, fig.height=4)
-knitr::opts_knit$set(root.dir = '/Users/hm8/stanford/nescent_melCA/seasonal2020/bayenv')
 library(ggplot2)
 library(cowplot)
 library(caTools)
@@ -50,11 +49,11 @@ library(RColorBrewer)
 
 ## Reading in full bayenv results
 ```{r, fig.width=2.5, fig.height=2}
-full = na.omit(read.table("results/results_nonpooled_iter100K.seasonal_paired20_snpsfile_Ne_Jan2020.txt", stringsAsFactors = F, sep="\t", fill=T))
+full = na.omit(read.table("results_nonpooled_iter100K.seasonal_paired20_snpsfile_Ne_Jan2020.txt", stringsAsFactors = F, sep="\t", fill=T))
 full$dataset = "full"
 colnames(full) = c("chrom","pos","bayes","rho","r", "dataset")
 
-filter = read.table("/Users/hm8/stanford/nescent_melCA/data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors = F)
+filter = read.table("..//chrom_pos_polymorphic_medfreq01_RRgrt0.txt", stringsAsFactors = F)
 filterchrompos = paste(filter[,1], filter[,2], sep="_")
 
 full$chrompos = paste(full$chrom, full$pos, sep="_")
@@ -66,7 +65,7 @@ fullfilter = merge(full[,c("chrompos","bayes","rho","r", "dataset")], data.frame
 permlist = list()
 nperm = 100
 for (i in 1:nperm){
-  focal = read.table(paste("/Users/hm8/volumes/hm8_scratch117/nescent_melCA/seasonal2020/bayenv/results_perms_June2020/seasonal_paired20_snpsfile_Ne_June2020.txt.perm",i,".bf.gz", sep=""), stringsAsFactors = F, sep="\t", fill=T)[,1:4]
+  focal = read.table(paste("results_perms_June2020/seasonal_paired20_snpsfile_Ne_June2020.txt.perm",i,".bf.gz", sep=""), stringsAsFactors = F, sep="\t", fill=T)[,1:4]
   part1 = unlist(lapply(focal[,1],FUN=function(X) unlist(strsplit(X, split="/", fixed=T))[7]))
   chrompos = unlist(lapply(part1, FUN=function(X) unlist(strsplit(X, split=".", fixed=T))[1]))
   focalDF = data.frame(chrompos=chrompos, bayes=focal[,2], rho=focal[,3], r=focal[,4], dataset=paste("perm",i, sep=""))
@@ -79,7 +78,7 @@ names(permlist) = c(paste("perm", 1:nperm, sep=""), "full")
 
 ## Reading in regression results
 ```{r}
-reg = read.table("/Users/hm8/stanford/nescent_melCA/glm/mel_all_paired20_2sample_caF_popyear.f_s.glm", header=T, stringsAsFactors = F)
+reg = read.table("../results/mel_all_paired20_2sample_caF_popyear.f_s.glm", header=T, stringsAsFactors = F)
 ```
 
 
@@ -156,7 +155,7 @@ ggplot(bayenv01, aes(y=top01, x=dataset, color=grtobs) )+
 
 ## Reading in regression results
 ```{r}
-regNA = read.table("/Users/hm8/stanford/nescent_melCA/glm/mel_all_paired20_2sample_caF_popyear.f_s.glm", header=T, stringsAsFactors = F)
+regNA = read.table("../results/mel_all_paired20_2sample_caF_popyear.f_s.glm", header=T, stringsAsFactors = F)
 reg = na.omit(regNA)
 reg$chrompos = paste(reg$chrom, reg$pos, sep="_")
 ```
@@ -321,7 +320,7 @@ compare_glm_glm_quantile_sym_bin = function(data, pops){
 
 ## How do the bayenv results correlate with clinal variation
 ```{r}
-clinal = read.table("/Users/hm8/stanford/nescent_melCA/glm/mel_clinal_uniquepops_springPA.glm.noheader", stringsAsFactors = F)
+clinal = read.table("../results/mel_clinal_uniquepops_springPA.glm.noheader", stringsAsFactors = F)
 clinal$chrompos = paste(clinal[,1], clinal[,2], sep="_")
 colnames(clinal) = c("chrom","pos","clinal.coef","clinal.p", "clinal.n","chrompos")
 reg_full_clinal = na.omit(merge(reg_full, clinal[,c("chrompos","clinal.coef","clinal.p")], by="chrompos"))

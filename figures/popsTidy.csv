@@ -1,0 +1,22 @@
+newname,oldname,set,nYears,latitude,longitude.true,longitude,city,state,country,group,jitter
+RD.CA,RD,Core20,2,38.68,-122.046,-122.046,Esparto,California,USA,CA,F
+CO.CA,CO,Core20,1,37.97,-120.26,-120.26,Toulomne,California,USA,CA,F
+LC.MA,MA,Core20,2,42.45,-71.67,-71.67,Lancaster,Massachusetts,USA,EC,F
+LN.PA,LNPA,Core20,2,39.88,-75.41,-74.41,Linvilla,Pennsylvania,USA,EC,T
+IT.NY,NY,Core20,1,42.44,-76.5,-76.5,Ithica,New York,USA,EC,F
+CP.WI,WI,Core20,2,43.11,-89.65,-88.65,Cross Plains,Wisconsin,USA,EC,T
+AT.GA,AGA,Core20,1,33.95,-83.36,-83.36,Athens,Georgia,USA,EC,F
+CV.VA,CUVA,Core20,2,38,-78.47,-78.47,Charlottesville,Virginia,USA,EC,F
+SC.PA,SCPA,Core20,1,40.793395,-77.860001,-77.860001,State College,Pennsylvania,USA,EC,F
+TP.KA,TKA,Core20,1,39.202831,-95.741527,-95.741527,Topka,Kansas,USA,EC,F
+SD.ON,SON,Core20,1,46.53,-80.96,-80.96,Sudbury,Ontario,Canada,EC,F
+BH.MI,BHM,Core20,1,42.1111,-86.4483,-86.4483,Benton Harbor,Michigan,USA,EC,F
+BC.SP,BA,Core20,1,41.38,2.17,2.17,Barcelona,Barcelona,Spain,EU,F
+GZ.VI,VI,Core20,1,48.2,16.37,16.37,Gross-Enzersdorf,Gross-Enzersdorf,Vienna,EU,F
+OD.UK,OUK,Core20,1,46.49,30.71,30.71,Odessa,Odessa,Ukraine,EU,F
+LN.PA,LNPA,NewSet,3,39.88,-75.41,-76.41,Linvilla,Pennsylvania,USA,EC,T
+CP.WI,WI,NewSet,1,43.11,-89.65,-90.65,Cross Plains,Wisconsin,USA,EC,T
+HS.FL,FL,Cline,1,25.5,-80.477,-80.477,Homestead,Florida,USA,EC,F
+EW.SC,SC,Cline,1,33.39,-80.34,-80.34,Eutawville,South Carolina,USA,EC,F
+HH.GA,GA,Cline,1,30.99,-83.37,-83.37,Hahia,Georgia,USA,EC,F
+LN.PA,LNPA,Cline,1,38.88,-75.41,-75.41,Linvilla,Pennsylvania,USA,EC,T

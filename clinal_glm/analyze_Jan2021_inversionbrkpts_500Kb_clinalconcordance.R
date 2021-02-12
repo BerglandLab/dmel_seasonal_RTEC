@@ -1,7 +1,6 @@
 ## Nov 2020
 #library(ggplot2)
 
-setwd("/Users/hm8/stanford/nescent_melCA/clinal/inversions")
 library(data.table)
 library(ggplot2)
 library(cowplot)
@@ -9,10 +8,10 @@ library(reshape2)
 library(plyr)
 
 ### load in orginal data 
-cline = fread("/Users/hm8/stanford/nescent_melCA/glm/mel_clinal_uniquepops_springPA_noMA.glm.noheader")
+cline = fread("../results/mel_clinal_uniquepops_springPA_noMA.glm.noheader")
 colnames(cline) = c("chrom","pos","clinal.coef","clinal.p","N")
-seas = fread("/Users/hm8/stanford/nescent_melCA/glm/mel_all_nonclinal_paired20_2sample_caF_popyear.f_s.glm")
-filter = fread("/Users/hm8/stanford/nescent_melCA/data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt")
+seas = fread("../results/mel_all_nonclinal_paired20_2sample_caF_popyear.f_s.glm")
+filter = fread("../data/chrom_pos_polymorphic_medfreq01_RRgrt0.txt")
 setnames(filter, names(filter), c("chrom", "pos"))
 setkey(filter, chrom, pos)
 setkey(cline, chrom, pos)
