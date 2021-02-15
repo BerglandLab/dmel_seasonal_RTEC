@@ -1,8 +1,0 @@
-base
-ggplot2
-cowplot
-caTools
-reshape2
-dplyr
-gridGraphics
-RColorBrewer
