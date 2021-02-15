@@ -22,7 +22,7 @@
 `seasonal_bayenv/code_seasonal_bayenv_Jan2020.sh`
 
 # 6. Seasonal / latitudinal concordance
-### uses file on datadryad (https://doi.org/10.5061/dryad.4r7b826): bootstrap_fmean_dp.mel.medfreq01_RRgrt0.recRate.polymorphic.txt
+### Can use file on datadryad (https://doi.org/10.5061/dryad.4r7b826): bootstrap_fmean_dp.mel.medfreq01_RRgrt0.recRate.polymorphic.txt (otherwise, can create in step 1, "create input files")
 ### 1. latitudinal glm regression
 `Rscript clinal_glm/code_clinal_glm.sh`
 ### 2. latitudinal bayenv analysis (including Figure S5)
