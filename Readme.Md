@@ -29,16 +29,16 @@
 `clinal_bayenv/code_bayenv.sh`
 
 # 7. Inversion frequencies
-`dmel_seasonal_RTEC/InversionFreqs`
+`InversionFreqs`
 
 # 8. Predicability Model
-`dmel_seasonal_RTEC/predictability_model/Readme.Md`
+`predictability_model/Readme.Md`
 
 # 9. Comparison to Bergland et al 2014
-`dmel_seasonal_RTEC/comparision2014/Readme.Md`
+`comparision2014/Readme.Md`
 
 # 10. Evaluate decontamination with D. simulans
-`dmel_seasonal_RTEC/sim_contamination_simulation_scripts/download_map.sh`
+`sim_contamination_simulation_scripts/download_map.sh`
 
 # 11. Effect of inflated sample size estimate on glm vs rfm (Figure S8)
 `samplesizeinflation_glm_vs_rfm/code_samplesizeinflation_glm_vs_rfm.sh`
